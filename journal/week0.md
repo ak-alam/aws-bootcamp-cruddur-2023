@@ -1,28 +1,28 @@
 # Week 0 — Billing and Architecture
 
-# Todo List for week 0
+# **Todo List for week 0**
 
-Set MFA for Root Account
+- Set MFA for Root Account
 
-Create an Admin User
+- Create an Admin User
 
-Use CloudShell
+- Use CloudShell
 
-Generate AWS Credentials
+- Generate AWS Credentials
 
-Installed AWS CLI
+- Installed AWS CLI
 
-Create a Billing Alarm
+- Create a Billing Alarm
 
-Create a Budget
+- Create a Budget
 
-### Set MFA for Root Account
+### **Set MFA for Root Account**
 Setting MFA for root account.
 
 ![MFA root acc](_docs/assets/images/root-acc-MFA.jpg)
 
 
-### Creating an Admin User:
+### **Creating an Admin User:**
  To create a admin user, first we need to create a admin group. Users within this group will have all privileges to AWS account.
  IAM (Identity and Access management) Service is the place where we create users, groups, policies and roles for access aws account and different services within our aws account. 
 Steps:
@@ -33,9 +33,56 @@ Steps:
 ![Admin user group](_docs/assets/images/IAM-group.png)
 
 
-### Use CloudShell
+### **Use CloudShell**
 
 
-### Generate AWS Credentials
+### **Generate AWS Credentials & AWS CLI on gitpod**
 
-### Installing AWS CLI on gitpod
+Download the access key token from the IAM user and installed aws cli.
+
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+```
+Configure AWS CLI
+Type aws configure on local terminal and a pop up will show up fill out your access key id, secret and default region and you're good to go.
+If you're on gitpod we can add them to environment variables.
+
+```
+gp env AWS_ACCESS_KEY_ID="AKIA6NLPTWZYHZYO"
+gp env AWS_SECRET_ACCESS_KEY="+KuB/gaddAisXs57tvDF9gCU9xomTcTfFbwE"
+gp env AWS_DEFAULT_REGION="us-east-1"
+```
+
+### **Create a Budget**
+
+There are two ways to create budget for our aws account through console and aws cli. I have created budget both ways.
+
+Using CLI
+
+```
+aws budgets create-budget --account-id 990754292191 --budget file://aws/json/budget.json --notifications-with-subscribers file://aws/json/notifications-with-subscribers.json
+
+```
+
+I have used budget and notification json payload to send my budget data through aws cli API call which created me a budget of 5$ and an alert which will notify me via email whenever my cost exceeds threshold of 80% of my budget. 
+
+
+### **Creating a billing alarm using cli**
+Steps 
+- Create a SNS topic 
+- Create a subscription to that sns topic
+- Create an alarm based on metric
+
+```
+aws sns create-topic --name cloud-billing-alarm
+```
+```
+aws sns subscribe --topic-arn arn:aws:sns:us-east-1:990754292191:cloud-billing-alarm --protocol email --notification-endpoint info.alambiz@gmail.com
+```
+```
+aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
+```
+
