@@ -2,6 +2,8 @@
 
 # **Todo List for week 0**
 
+- Architecture Diagram for crudder
+
 - Set MFA for Root Account
 
 - Create an Admin User
@@ -17,23 +19,30 @@
 - Create a Budget
 
 ### **Set MFA for Root Account**
-Setting MFA for root account.
 
-![MFA root acc](_docs/assets/images/root-acc-MFA.jpg)
+
+![Root Acc MFA](../_docs/assets/week-0/root-acc-MFA.jpg "Root Acc MFA")
 
 
 ### **Creating an Admin User:**
+
  To create a admin user, first we need to create a admin group. Users within this group will have all privileges to AWS account.
  IAM (Identity and Access management) Service is the place where we create users, groups, policies and roles for access aws account and different services within our aws account. 
 Steps:
-* Got to IAM console, Click on users group from the left side of the console and create group with name admin and assign aws manage policy AdministratorAccess.
-* Before creating user there are 3 ways to give a user perrmission. Attach user to group, copy permissions, Attach policies directly. 
-* In copy permission we can copy the permission of one user to another user or we can attach policies directly to users which is not a good practice and lastly the best one is assign user to a group. So, we already created the group name admin we now can assign our iam user to admin group which has AdministratorAccess.
+- Got to IAM console, Click on users group from the left side of the console and create group with name admin and assign aws manage policy AdministratorAccess.
+- Before creating user there are 3 ways to give a user perrmission. Attach user to group, copy permissions, Attach policies directly. 
+- In copy permission we can copy the permission of one user to another user or we can attach policies directly to users which is not a good practice and lastly the best one is assign user to a group. So, we already created the group name admin we now can assign our iam user to admin group which has AdministratorAccess.
 
-![Admin user group](_docs/assets/images/IAM-group.png)
+
+![Admin user group](../_docs/assets/week-0/IAM-group.png)
+
 
 
 ### **Use CloudShell**
+
+Cloudshell example
+
+![cloudshell](../_docs/assets/week-0/cloudshell.png)
 
 
 ### **Generate AWS Credentials & AWS CLI on gitpod**
@@ -69,6 +78,8 @@ aws budgets create-budget --account-id 990754292191 --budget file://aws/json/bud
 
 I have used budget and notification json payload to send my budget data through aws cli API call which created me a budget of 5$ and an alert which will notify me via email whenever my cost exceeds threshold of 80% of my budget. 
 
+![Root Acc MFA](../_docs/assets/week-0/budget.png)
+
 
 ### **Creating a billing alarm using cli**
 Steps 
@@ -86,3 +97,4 @@ aws sns subscribe --topic-arn arn:aws:sns:us-east-1:990754292191:cloud-billing-a
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
 ```
 
+![Root Acc MFA](../_docs/assets/week-0/billing-alarm.png)
