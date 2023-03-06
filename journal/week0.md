@@ -18,6 +18,25 @@
 
 - Create a Budget
 
+
+
+### **Architecture diagrams**
+
+**Napkin Desing**
+
+![Napik](../_docs/assets/week-0/napkin-design.jpg)
+
+
+**Conceptual diagram**
+
+![conceptual](../_docs/assets/week-0/crudder%20diagram.svg)
+
+
+**Architecture diagram**
+
+![architecture](../_docs/assets/week-0/cloud%20diagram.svg)
+
+
 ### **Set MFA for Root Account**
 
 
