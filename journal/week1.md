@@ -36,10 +36,61 @@ created dockerfile for flask backend service. As our backend is written in flask
 
 
 ## React Frontend:
-Our frontend is written in react which is javascript library, I will be using node as my base image to build containers..
+Our frontend is written in react which is javascript library, I will be using node as my base image to build containers and the process for build and running the docker image is same as we did for our backend service.
+
 **Docker Container For Backend Service**:
 * Build docker image form frontend directory
 * Run that image on port 3000
-* Check for the response from backend api endpoint by append this at the end or url '/api/activities/home'
+* Chcek if site is up on port 3000 using browser or curl command.
 
+**docker build**
+
+![docker-build](../_docs/assets/week-0/react-frontend.png)
+
+
+**Load Frontend using browser**
+
+![frontend-url](../_docs/assets/week-0/react-browser.png)
+
+
+## Docker compose
+docker compose is used to create multiple docker container from signle compose file reference to different docker files in pur project. For our use case I can created 4 containers from single docker-compose file with different configuration for each container.
+
+
+```console
+docker-compose up --build
+```
+**Use this command to run all the containers from our docker compose file.**
+
+**docker compose up:**
+
+![docker-compse-build](../_docs/assets/week-0/docker-compose-build.png)
+
+![docker-compse-up](../_docs/assets/week-0/docker-compose-up.png)
+
+
+## Adding PostgreSQL & Dynamodb local to docker compose:
+
+We will add postgresql and dynamodb as services to our perviously created docker compose file and test if connection and inserting some dummy/test data into the both databases.
+
+**Dynamodb Local**
+
+![dynamodb-local-table](../_docs/assets/week-0/dynamodb-table.png)
+
+![dynamodb-local-put](../_docs/assets/week-0/dynamodb-put.png)
+
+![dynamodb-local-list](../_docs/assets/week-0/dynamodb-list.png)
+
+**postgresql**
+
+![postgresql-list](../_docs/assets/week-0/postgress.png)
+
+
+## Implementing notification service for backend & frontend
+
+**Backend Notification Response**
+![backend-notification](../_docs/assets/week-0/backend-notification.png)
+
+**Frontend**
+![frontend](../_docs/assets/week-0/notification-frontend.png)
 
