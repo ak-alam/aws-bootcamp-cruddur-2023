@@ -22,3 +22,15 @@ source venv/bin/activate
 ```
 pip install flask
 ```
+
+
+# Backend configs
+#Honeycomb
+
+export HONEYCOMB_API_KEY="j0LeX9NihCXkaEuPHj6QoD"
+export HONEYCOMB_SERVICE_NAME="cruddur"
+
+#URLS ENVs
+
+export FRONTEND_URL="*"
+export BACKEND_URL="*"
