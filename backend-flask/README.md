@@ -34,3 +34,7 @@ export HONEYCOMB_SERVICE_NAME="cruddur"
 
 export FRONTEND_URL="*"
 export BACKEND_URL="*"
+
+
+#rollbar
+export ROLLBAR_ACCESS_TOKEN="b029973d5bef45e48ec108ecea9a2776"

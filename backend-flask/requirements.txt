@@ -11,3 +11,7 @@ flask-cors
 
 #cloudwatch-logs
 watchtower
+
+#rollbar
+blinker
+rollbar
