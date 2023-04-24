@@ -51,7 +51,7 @@ from time import strftime
 LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.DEBUG)
 console_handler = logging.StreamHandler()
-cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+cw_handler = watchtower.CloudWatchLogHandler(log_group='backend-cruddur')
 LOGGER.addHandler(console_handler)
 LOGGER.addHandler(cw_handler)
 LOGGER.info("test logging")
