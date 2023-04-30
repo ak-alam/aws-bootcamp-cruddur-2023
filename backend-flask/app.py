@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
+import requests
 
 from services.home_activities import *
 from services.notifications_activities import *
@@ -14,7 +15,11 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
+from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
 
+import logging
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.DEBUG)
 
 #honeycombo tracing
 # from opentelemetry import trace
@@ -66,6 +71,14 @@ from services.show_activity import *
 
 app = Flask(__name__)
 
+#cognito token verification
+cognito_jwt_token = CognitoJwtToken(
+  user_pool_id = os.getenv("AWS_COGNITO_USER_POOL_ID"),
+  user_pool_client_id = os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+  region = os.getenv("AWS_DEFAULT_REGION")
+)
+
+
 # Initialize automatic instrumentation with Flask
 # FlaskInstrumentor().instrument_app(app)
 # RequestsInstrumentor().instrument()
@@ -92,14 +105,31 @@ app = Flask(__name__)
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
+
 origins = [frontend, backend]
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
-  expose_headers="location,link",
-  allow_headers="content-type,if-modified-since",
+  headers=['Content-Type', 'Authorization'], 
+  expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
 )
+# cors = CORS(
+#   app, 
+#   resources={r"/api/*": {"origins": origins}},
+#   headers=['Content-Type', 'Authorization'], 
+#   expose_headers='Authorization',
+#   methods="OPTIONS,GET,HEAD,POST"
+# )
+
+
+# cors = CORS(
+#   app, 
+#   resources={r"/api/*": {"origins": origins}},
+#   expose_headers="location,link",
+#   allow_headers="content-type,if-modified-since",
+#   methods="OPTIONS,GET,HEAD,POST"
+# )
 
 #cloudwatch logs after every log
 # @app.after_request
@@ -152,9 +182,21 @@ def data_create_message():
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
-  data = HomeActivities.run()
+  # data = HomeActivities.run()
   # data = HomeActivities.run(logger=LOGGER)
-
+  access_token = extract_access_token(request.headers)
+  try:
+    #authenicated requests
+    claims = cognito_jwt_token.verify(access_token)
+    app.logger.debug("authenicated")
+    # app.logger.debug(claims)
+    # data = HomeActivities.run()
+  except TokenVerifyError as e:
+    #unauthenicated request
+    # _ = request.data
+    app.logger.debug("unauthenicated")
+    # abort(make_response(jsonify(message=str(e)), 401))
+  data = HomeActivities.run()
   return data, 200
 
 @app.route("/api/activities/notifications", methods=['GET'])

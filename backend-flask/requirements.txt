@@ -1,5 +1,7 @@
 flask
 flask-cors
+requests
+Flask-AWSCognito
 #honeycomb
 #opentelemetry-api 
 #opentelemetry-sdk 

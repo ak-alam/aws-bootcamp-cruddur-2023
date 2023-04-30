@@ -40,7 +40,7 @@ export default function RecoverPage() {
     setErrors('')
     if (password == passwordAgain){
       Auth.forgotPasswordSubmit(username, code, password)
-      .then((data) => setFormState('success')) status
+      .then((data) => setFormState('success'))
       .catch((err) => setErrors(err.message) );
     } else {
       setErrors('Passwords do not match')
