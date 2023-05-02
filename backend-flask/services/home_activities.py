@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
 class HomeActivities:
-  def run():
+  def run(cognito_user_id=None):
     now = datetime.now(timezone.utc).astimezone()
     results = [{
       'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
@@ -42,6 +42,18 @@ class HomeActivities:
       'replies': []
     }
     ]
+
+    if cognito_user_id != None:
+      extra_crud = {
+        'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+        'handle':  'itsgodly_',
+        'message': 'You see the problem??',
+        'created_at': (now - timedelta(hours=1)).isoformat(),
+        'expires_at': (now + timedelta(hours=12)).isoformat(),
+        'likes': 123,
+        'replies': []
+      }
+      results.insert(0, extra_crud)
     return results
 
 
