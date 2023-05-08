@@ -62,16 +62,16 @@ services:
   #     - "./docker/dynamodb:/home/dynamodblocal/data"
   #   working_dir: /home/dynamodblocal
 
-  # pg-database:
-  #   image: postgres:13-alpine
-  #   restart: always
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=password
-  #   ports:
-  #     - '5432:5432'
-  #   volumes: 
-  #     - pg-data:/var/lib/postgresql/data
+  pg-database:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - '5432:5432'
+    volumes: 
+      - pg-data:/var/lib/postgresql/data
 
 
 # the name flag is a hack to change the default prepend folder
@@ -81,6 +81,6 @@ services:
 #     driver: bridge
 #     name: cruddur
 
-# volumes:
-#   pg-data:
-#     driver: local
+volumes:
+  pg-data:
+    driver: local
