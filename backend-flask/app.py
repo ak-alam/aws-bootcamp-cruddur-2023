@@ -179,7 +179,7 @@ def data_create_message():
   else:
     return model['data'], 200
   return
-
+ 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
   # data = HomeActivities.run()
@@ -191,8 +191,11 @@ def data_home():
     app.logger.debug("authenicated")
     app.logger.debug(claims)
     app.logger.debug(claims['username'])
+    print("Testing")
     data = HomeActivities.run(cognito_user_id=claims['username'])
+    print("Try")
   except TokenVerifyError as e:
+    print("except")
     #unauthenicated request
     # _ = request.data
     app.logger.debug(e)
