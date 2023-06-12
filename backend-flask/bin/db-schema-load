@@ -16,5 +16,5 @@ else
     echo "Schema loading"
     URL=$CONNECTION_URL
 fi
-
-psql $CONNECTION_URL crudder < $schema_path
+echo $URL
+psql $URL crudder < $schema_path
